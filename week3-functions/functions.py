@@ -47,24 +47,7 @@ print(re)
 
 # 추출한 레이놀즈 수로 유동 상태 판정
 re_value = 20000
-print(flow_regime(re_value))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+print(flow_regime(re))
 
 
 
