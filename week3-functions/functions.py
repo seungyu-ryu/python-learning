@@ -5,7 +5,25 @@ def greet(name):
   """인사하는 함수"""
   return f"안녕하세요, {name}님!"
 
+# 반환값이 있는 함수
+def add_number(a, b):
+  """두 수를 더해서 결과를 반환하는 함수"""
+  result = a + b
+  return result
+sum_result = add_number(5, 3)
+print(f"5+3={sum_result}")
+
 #화학공학 관련 함수
+def celsius to fahrenheit(celsius):
+  """섭씨를 화씨로 변환"""
+  fahrenheit = (celsius * 9/5) + 32
+  return fahrenheit
+
+def fahrenheit_to_celsius(fahrenheit):
+    """화씨를 섭씨로 변환"""
+    celsius = (fahrenheit - 32) * 5/9
+    return celsius
+  
 def calculate_density(mass, volume):
   """밀도 계산 함수 (kg/m³)"""
   if volume == 0:
