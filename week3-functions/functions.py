@@ -117,18 +117,124 @@ print(f"이상기체 부피: {volume:.2f}L")
 
 def reaction_rate(concentration, temperature, rate_constanr=1.0):
   """반응 속도 계산 (간단한 1차 반응)"""
-  rate = rate_constant * concentrate * (temperature/298.15)
+  rate = rate_constant * concentrate * (temperature/298.15) # 온도 보정
   return rate
 conc = 0.1
 temp = 323.15
 rate1 = reation_rate(conc, temp)
 rate2 = reaction_rate(conc, temp, 2.5) # 다른 속도 상수
 print(f"반응 속도 (k=1.0): {rate1:.4f}") 
-print(f"반응 속도 (k=1.0): {rate2:.4f}")
+print(f"반응 속도 (k=1.0): {rate2:.4f}") 
 print()
 
-def calculate_heat(mass, specific_heat, delta_temperature):
+print(f"압력 단위 변환 함수")
+def atm_to_Pa(atm):
+  """압력 단위 변환 함수 (atm ↔ Pa)"""
+  Pa = atm * 101325
+  return Pa
+def Pa_to_atm(Pa):
+   """압력 단위 변환 함수 (atm ↔ Pa)"""
+  atm = Pa / 101325
+  return atm
+
+print(f"열량 계산 함수")
+def calculate_heat(mass, specific_heat, T_initial, T_final):
+  """열량 계산 함수 (Q = mcΔT)"""
+  delta_temperature = T_final - T_initial
+  heat = mass * specific_heat * delta_temperature
+  return heat
+
+print(f"효율 계산 함수")
+def calculate_efficiency(E_input, E_output):
+  """효율 계산 함수"""
+  efficiency = E_output / E_input * 100
+  return efficiency
+
+print(f"평형 상수 계산 함수")
+def calculate_equilibrium_constant(concentrations, coefficients):
+  """
+  평형 상수 계산 (리스트 방식)
+  concentrations: 농도 리스트
+  coefficients: 계수 리스트(반응물은 음수, 생성물은 양수)
+  """
+  k = 1.0
+  for conc, coeff in zip(concentrations, coefficients):
+    if coeff > 0:  # 생성물
+      k *= conc ** abs(coeff)
+    else:  # 반응물
+      k /= conc ** abs(coeff)
+  return k
+
+def calculate_equilibrium_constant(reactants, products):
+  """
+  평형 상수 계산 (분리된 딕셔너리)
+  reactants: {"화학종": (계수, 농도), ...}
+  products: {"화학종": (계수, 농도), ...}
+  """
+  numerator = 1   # 생성물 항 계산 (분자)
+  for species, (coeff, conc) in products.items():
+    numerator *= conc ** coeff
+  denominator = 1   # 반응물 항 계산 (분모)
+  for species, (coeff, conc) in reactants.items():
+    denominator *= conc ** coeff
+
+  k = numerator / denominator
+  return k
+
+def calculate_equilibrium_constant(species):
+  """
+  평형 상수 계산 (통합 딕셔너리)
+  species: {"화학종":(계수, 농도, "역할"),...}
+  역할: "reactant" 또는 "product"
+  """
+  numerator = 1   # 생성물
+  denominator = 1   # 반응물
+  for sp, (coeff, conc, role) in species.items():
+    if role == "product":
+      numerator *= conc ** coeff
+    elif role == "reactant":
+      denominator *= conc ** coeff
+    else:
+      print(f"Warning: Unknown role '{role}' for {sp}")
+  return numerator / denominator
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
+
+
+
+
+
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
